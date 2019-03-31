@@ -15,9 +15,6 @@ public class Car {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "manufacturer_id")
-    private int manufacturerId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
@@ -28,8 +25,7 @@ public class Car {
     public Car() {
     }
 
-    public Car(String name, int manufacturerId, Manufacturer manufacturer) {
-        this.manufacturerId = manufacturerId;
+    public Car(String name, Manufacturer manufacturer) {
         this.name = name;
         this.manufacturer = manufacturer;
         complectations = new ArrayList<>();
@@ -41,13 +37,5 @@ public class Car {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getManufacturerId() {
-        return manufacturerId;
-    }
-
-    public void setManufacturerId(int manufacturerId) {
-        this.manufacturerId = manufacturerId;
     }
 }

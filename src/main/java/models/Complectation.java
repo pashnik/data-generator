@@ -1,6 +1,8 @@
 package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "complectation")
@@ -9,15 +11,6 @@ public class Complectation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "car_id")
-    private int carId;
-
-    @Column(name = "transmission_id")
-    private int transmissionId;
-
-    @Column(name = "body_id")
-    private int bodyId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
@@ -31,40 +24,51 @@ public class Complectation {
     @JoinColumn(name = "body_id")
     private Body body;
 
+    @ManyToMany
+    @JoinTable(name = "comp_engine",
+            joinColumns = @JoinColumn(name = "complectation_id"),
+            inverseJoinColumns = @JoinColumn(name = "engine_id"))
+    private List<Engine> engines;
+
+    @ManyToMany
+    @JoinTable(name = "comp_optional",
+            joinColumns = @JoinColumn(name = "complectation_id"),
+            inverseJoinColumns = @JoinColumn(name = "optional_id"))
+    private List<Optional> optionals;
+
     public Complectation() {
     }
 
-    public Complectation(int carId, int transmissionId, int bodyId,
-                         Car car, Transmission transmission, Body body) {
-        this.carId = carId;
-        this.transmissionId = transmissionId;
-        this.bodyId = bodyId;
+    public Complectation(Car car, Transmission transmission, Body body) {
         this.car = car;
         this.body = body;
         this.transmission = transmission;
+        this.engines = new ArrayList<>();
+        this.optionals = new ArrayList<>();
     }
 
-    public int getCarId() {
-        return carId;
+
+    public Car getCar() {
+        return car;
     }
 
-    public void setCarId(int carId) {
-        this.carId = carId;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
-    public int getTransmissionId() {
-        return transmissionId;
+    public Transmission getTransmission() {
+        return transmission;
     }
 
-    public void setTransmissionId(int transmissionId) {
-        this.transmissionId = transmissionId;
+    public void setTransmission(Transmission transmission) {
+        this.transmission = transmission;
     }
 
-    public int getBodyId() {
-        return bodyId;
+    public Body getBody() {
+        return body;
     }
 
-    public void setBodyId(int bodyId) {
-        this.bodyId = bodyId;
+    public void setBody(Body body) {
+        this.body = body;
     }
 }

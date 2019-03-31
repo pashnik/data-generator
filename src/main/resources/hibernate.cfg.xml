@@ -21,6 +21,8 @@
         <mapping class="models.Complectation"/>
         <mapping class="models.Transmission"/>
         <mapping class="models.Body"/>
+        <mapping class="models.Optional"/>
+        <mapping class="models.Engine"/>
 
     </session-factory>
 </hibernate-configuration>
