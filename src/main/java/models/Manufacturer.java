@@ -1,6 +1,8 @@
-package DataModels;
+package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "manufacturer")
@@ -16,12 +18,16 @@ public class Manufacturer {
     @Column(name = "manufacturer_name")
     private String manufacturerName;
 
+    @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Car> cars;
+
     public Manufacturer() {
     }
 
     public Manufacturer(String countryName, String manufacturerName) {
         this.countryName = countryName;
         this.manufacturerName = manufacturerName;
+        this.cars = new ArrayList<>();
     }
 
     public String getCountryName() {
