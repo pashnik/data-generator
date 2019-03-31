@@ -38,4 +38,20 @@ public class Car {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public List<Complectation> getComplectations() {
+        return complectations;
+    }
+
+    public void setComplectations(List<Complectation> complectations) {
+        this.complectations = complectations;
+    }
 }

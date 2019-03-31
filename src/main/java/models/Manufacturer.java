@@ -30,6 +30,14 @@ public class Manufacturer {
         this.cars = new ArrayList<>();
     }
 
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
     public String getCountryName() {
         return countryName;
     }

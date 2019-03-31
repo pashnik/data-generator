@@ -47,6 +47,21 @@ public class Complectation {
         this.optionals = new ArrayList<>();
     }
 
+    public List<Engine> getEngines() {
+        return engines;
+    }
+
+    public void setEngines(List<Engine> engines) {
+        this.engines = engines;
+    }
+
+    public List<Optional> getOptionals() {
+        return optionals;
+    }
+
+    public void setOptionals(List<Optional> optionals) {
+        this.optionals = optionals;
+    }
 
     public Car getCar() {
         return car;
@@ -71,4 +86,5 @@ public class Complectation {
     public void setBody(Body body) {
         this.body = body;
     }
+
 }

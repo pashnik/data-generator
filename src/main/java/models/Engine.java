@@ -41,6 +41,14 @@ public class Engine {
         this.complectations = new ArrayList<>();
     }
 
+    public List<Complectation> getComplectations() {
+        return complectations;
+    }
+
+    public void setComplectations(List<Complectation> complectations) {
+        this.complectations = complectations;
+    }
+
     public int getPower() {
         return power;
     }
