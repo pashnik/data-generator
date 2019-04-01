@@ -1,3 +1,5 @@
+package utils;
+
 import models.Manufacturer;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

@@ -47,6 +47,14 @@ public class Complectation {
         this.optionals = new ArrayList<>();
     }
 
+    public void addOptional(Optional optional) {
+
+    }
+
+    public void addEngine(Engine engine) {
+
+    }
+
     public List<Engine> getEngines() {
         return engines;
     }

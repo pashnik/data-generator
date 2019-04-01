@@ -9,7 +9,7 @@
         <property name="hibernate.connection.url">jdbc:://localhost:3306/postgres</property>
         <property name="hibernate.connection.username">pashnik</property>
         <property name="hibernate.connection.password">Fktrcfy12</property>
-        <property name="hibernate.connection.pool_size">1</property>
+        <property name="hibernate.connection.pool_size">10</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
         <property name="hibernate.connection.characterEncoding">utf8</property>

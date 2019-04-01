@@ -31,6 +31,11 @@ public class Car {
         complectations = new ArrayList<>();
     }
 
+    public void addComplectation(Complectation complectation) {
+        complectation.setCar(this);
+        complectations.add(complectation);
+    }
+
     public String getName() {
         return name;
     }

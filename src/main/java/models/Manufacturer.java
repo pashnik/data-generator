@@ -30,6 +30,15 @@ public class Manufacturer {
         this.cars = new ArrayList<>();
     }
 
+    public void addCar(Car car) {
+        car.setManufacturer(this);
+        cars.add(car);
+    }
+
+    public void removeCar(Car car) {
+        cars.remove(car);
+    }
+
     public List<Car> getCars() {
         return cars;
     }
