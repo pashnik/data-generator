@@ -27,7 +27,6 @@ public class Body {
     }
 
     public void addComplectation(Complectation complectation) {
-        complectation.setBody(this);
         complectations.add(complectation);
     }
 

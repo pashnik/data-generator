@@ -27,7 +27,6 @@ public class Transmission {
     }
 
     public void addComplectation(Complectation complectation) {
-        complectation.setTransmission(this);
         complectations.add(complectation);
     }
 

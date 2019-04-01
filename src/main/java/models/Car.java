@@ -32,8 +32,11 @@ public class Car {
     }
 
     public void addComplectation(Complectation complectation) {
-        complectation.setCar(this);
         complectations.add(complectation);
+    }
+
+    public void removeComplectation(Complectation complectation) {
+        complectations.remove(complectation);
     }
 
     public String getName() {

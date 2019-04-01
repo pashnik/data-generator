@@ -46,6 +46,14 @@ public class Optional {
         this.complectations = new ArrayList<>();
     }
 
+    public void addComplectation(Complectation complectation) {
+        complectations.add(complectation);
+    }
+
+    public void removeComplectation(Complectation complectation) {
+        complectations.remove(complectation);
+    }
+
     public List<Complectation> getComplectations() {
         return complectations;
     }

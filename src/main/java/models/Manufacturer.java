@@ -31,7 +31,6 @@ public class Manufacturer {
     }
 
     public void addCar(Car car) {
-        car.setManufacturer(this);
         cars.add(car);
     }
 

@@ -48,11 +48,19 @@ public class Complectation {
     }
 
     public void addOptional(Optional optional) {
-
+        optionals.add(optional);
     }
 
     public void addEngine(Engine engine) {
+        engines.add(engine);
+    }
 
+    public void removeOptional(Optional optional) {
+        optionals.remove(optional);
+    }
+
+    public void removeEngine(Engine engine) {
+        engines.remove(engine);
     }
 
     public List<Engine> getEngines() {
