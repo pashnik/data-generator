@@ -1,12 +1,13 @@
 package dao;
 
+import dao.daoInterfaces.MainDaoInterface;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.HibernateSessionFactory;
 
 import java.util.List;
 
-public abstract class AbstractDao<T> implements DaoInterface<T> {
+public abstract class AbstractDao<T> implements MainDaoInterface<T> {
 
     protected abstract Class getEntity();
 
@@ -50,4 +51,12 @@ public abstract class AbstractDao<T> implements DaoInterface<T> {
                 .openSession().createQuery("From" + " " + getEntity().getSimpleName()).list();
     }
 
+    @Override
+    public void deleteAll() {
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.createQuery("delete from" + " " + getEntity().getSimpleName()).executeUpdate();
+        transaction.commit();
+        session.close();
+    }
 }

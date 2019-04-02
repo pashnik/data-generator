@@ -1,8 +1,8 @@
-package dao;
+package dao.daoInterfaces;
 
 import java.util.List;
 
-public interface DaoInterface<T> {
+public interface MainDaoInterface<T> {
 
     T findById(int id);
 
@@ -13,4 +13,6 @@ public interface DaoInterface<T> {
     void delete(T element);
 
     List<T> findAll();
+
+    void deleteAll();
 }
