@@ -1,9 +1,16 @@
 package models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "complectation")
 public class Complectation {
@@ -12,32 +19,39 @@ public class Complectation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;
 
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transmission_id")
     private Transmission transmission;
 
+    @Setter
+    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "body_id")
     private Body body;
 
+    @Setter
+    @Getter
     @ManyToMany
     @JoinTable(name = "comp_engine",
             joinColumns = @JoinColumn(name = "complectation_id"),
             inverseJoinColumns = @JoinColumn(name = "engine_id"))
     private List<Engine> engines;
 
+    @Setter
+    @Getter
     @ManyToMany
     @JoinTable(name = "comp_optional",
             joinColumns = @JoinColumn(name = "complectation_id"),
             inverseJoinColumns = @JoinColumn(name = "optional_id"))
     private List<Optional> optionals;
-
-    public Complectation() {
-    }
 
     public Complectation(Car car, Transmission transmission, Body body) {
         this.car = car;
@@ -62,45 +76,4 @@ public class Complectation {
     public void removeEngine(Engine engine) {
         engines.remove(engine);
     }
-
-    public List<Engine> getEngines() {
-        return engines;
-    }
-
-    public void setEngines(List<Engine> engines) {
-        this.engines = engines;
-    }
-
-    public List<Optional> getOptionals() {
-        return optionals;
-    }
-
-    public void setOptionals(List<Optional> optionals) {
-        this.optionals = optionals;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public Transmission getTransmission() {
-        return transmission;
-    }
-
-    public void setTransmission(Transmission transmission) {
-        this.transmission = transmission;
-    }
-
-    public Body getBody() {
-        return body;
-    }
-
-    public void setBody(Body body) {
-        this.body = body;
-    }
-
 }

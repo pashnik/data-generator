@@ -1,9 +1,16 @@
 package models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "transmission")
 public class Transmission {
@@ -12,14 +19,15 @@ public class Transmission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Setter
+    @Getter
     @Column(name = "transmission_type")
     private String transmissionType;
 
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "transmission", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Complectation> complectations;
-
-    public Transmission() {
-    }
 
     public Transmission(String transmissionType) {
         this.transmissionType = transmissionType;
@@ -34,19 +42,4 @@ public class Transmission {
         complectations.remove(complectation);
     }
 
-    public List<Complectation> getComplectations() {
-        return complectations;
-    }
-
-    public void setComplectations(List<Complectation> complectations) {
-        this.complectations = complectations;
-    }
-
-    public String getTransmissionType() {
-        return transmissionType;
-    }
-
-    public void setTransmissionType(String transmissionType) {
-        this.transmissionType = transmissionType;
-    }
 }

@@ -1,9 +1,16 @@
 package models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "optional")
 public class Optional {
@@ -12,29 +19,38 @@ public class Optional {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Setter
+    @Getter
     @Column(name = "media_center")
     private String mediaCenter;
 
+    @Setter
+    @Getter
     @Column(name = "air_bags")
     private String airBags;
 
+    @Setter
+    @Getter
     @Column(name = "emergency_system")
     private String emergencySystem;
 
+    @Setter
+    @Getter
     @Column(name = "headlights")
     private String headlights;
 
+    @Setter
+    @Getter
     @Column(name = "security_alarm")
     private String securityAlarm;
 
+    @Setter
+    @Getter
     @ManyToMany
     @JoinTable(name = "comp_optional",
             joinColumns = @JoinColumn(name = "optional_id"),
             inverseJoinColumns = @JoinColumn(name = "complectation_id"))
     private List<Complectation> complectations;
-
-    public Optional() {
-    }
 
     public Optional(String mediaCenter, String airBags,
                     String emergencySystem, String headlights, String securityAlarm) {
@@ -52,53 +68,5 @@ public class Optional {
 
     public void removeComplectation(Complectation complectation) {
         complectations.remove(complectation);
-    }
-
-    public List<Complectation> getComplectations() {
-        return complectations;
-    }
-
-    public void setComplectations(List<Complectation> complectations) {
-        this.complectations = complectations;
-    }
-
-    public String getMediaCenter() {
-        return mediaCenter;
-    }
-
-    public void setMediaCenter(String mediaCenter) {
-        this.mediaCenter = mediaCenter;
-    }
-
-    public String getAirBags() {
-        return airBags;
-    }
-
-    public void setAirBags(String airBags) {
-        this.airBags = airBags;
-    }
-
-    public String getEmergencySystem() {
-        return emergencySystem;
-    }
-
-    public void setEmergencySystem(String emergencySystem) {
-        this.emergencySystem = emergencySystem;
-    }
-
-    public String getHeadlights() {
-        return headlights;
-    }
-
-    public void setHeadlights(String headlights) {
-        this.headlights = headlights;
-    }
-
-    public String getSecurityAlarm() {
-        return securityAlarm;
-    }
-
-    public void setSecurityAlarm(String securityAlarm) {
-        this.securityAlarm = securityAlarm;
     }
 }
