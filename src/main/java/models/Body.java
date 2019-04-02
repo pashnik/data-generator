@@ -6,8 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Entity
@@ -27,11 +27,11 @@ public class Body {
     @Setter
     @Getter
     @OneToMany(mappedBy = "body", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Complectation> complectations;
+    private Set<Complectation> complectations;
 
     public Body(String bodyType) {
         this.bodyType = bodyType;
-        this.complectations = new ArrayList<>();
+        this.complectations = new HashSet<>();
     }
 
     public void addComplectation(Complectation complectation) {

@@ -6,8 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @ToString
@@ -50,7 +50,7 @@ public class Optional {
     @JoinTable(name = "comp_optional",
             joinColumns = @JoinColumn(name = "optional_id"),
             inverseJoinColumns = @JoinColumn(name = "complectation_id"))
-    private List<Complectation> complectations;
+    private Set<Complectation> complectations;
 
     public Optional(String mediaCenter, String airBags,
                     String emergencySystem, String headlights, String securityAlarm) {
@@ -59,7 +59,7 @@ public class Optional {
         this.emergencySystem = emergencySystem;
         this.headlights = headlights;
         this.securityAlarm = securityAlarm;
-        this.complectations = new ArrayList<>();
+        this.complectations = new HashSet<>();
     }
 
     public void addComplectation(Complectation complectation) {

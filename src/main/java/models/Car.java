@@ -6,8 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @NoArgsConstructor
@@ -34,12 +34,12 @@ public class Car {
     @Setter
     @Getter
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Complectation> complectations;
+    private Set<Complectation> complectations;
 
     public Car(String name, Manufacturer manufacturer) {
         this.name = name;
         this.manufacturer = manufacturer;
-        complectations = new ArrayList<>();
+        complectations = new HashSet<>();
     }
 
     public void addComplectation(Complectation complectation) {

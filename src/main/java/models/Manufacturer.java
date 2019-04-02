@@ -6,8 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @ToString
@@ -32,12 +32,12 @@ public class Manufacturer {
     @Setter
     @Getter
     @OneToMany(mappedBy = "manufacturer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Car> cars;
+    private Set<Car> cars;
 
     public Manufacturer(String countryName, String manufacturerName) {
         this.countryName = countryName;
         this.manufacturerName = manufacturerName;
-        this.cars = new ArrayList<>();
+        this.cars = new HashSet<>();
     }
 
     public void addCar(Car car) {

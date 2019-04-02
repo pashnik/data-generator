@@ -6,8 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @ToString
@@ -45,14 +45,14 @@ public class Engine {
     @JoinTable(name = "comp_engine",
             joinColumns = @JoinColumn(name = "engine_id"),
             inverseJoinColumns = @JoinColumn(name = "complectation_id"))
-    private List<Complectation> complectations;
+    private Set<Complectation> complectations;
 
     public Engine(int power, String engineType, int workingVolume, int ecologicalClass) {
         this.power = power;
         this.engineType = engineType;
         this.workingVolume = workingVolume;
         this.ecologicalClass = ecologicalClass;
-        this.complectations = new ArrayList<>();
+        this.complectations = new HashSet<>();
     }
 
     public void addComplectation(Complectation complectation) {
