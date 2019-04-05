@@ -16,9 +16,12 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
     public T findById(int id) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        T element = (T) HibernateSessionFactory.getSessionFactory().openStatelessSession().get(getEntity(), id);
-        transaction.commit();
-        session.close();
+        T element = (T) session.get(getEntity(), id);
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
         return element;
     }
 
@@ -27,8 +30,11 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(element);
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
@@ -36,8 +42,11 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.update(element);
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
@@ -45,8 +54,11 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.delete(element);
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -61,7 +73,10 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.createQuery("delete from" + " " + getEntity().getSimpleName()).executeUpdate();
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
     }
 }

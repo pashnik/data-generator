@@ -21,8 +21,11 @@ public class TransmissionDao extends AbstractDao<Transmission> implements Findab
         Query query = session.createQuery("from Transmission t where t.transmissionType = :name");
         query.setParameter("name", transmissionType);
         Transmission transmission = (Transmission) query.uniqueResult();
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
         return transmission;
     }
 }

@@ -21,8 +21,11 @@ public class BodyDao extends AbstractDao<Body> implements FindableByType<Body> {
         Query query = session.createQuery("from Body b where b.bodyType = :name");
         query.setParameter("name", bodyType);
         Body body = (Body) query.uniqueResult();
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
         return body;
     }
 }

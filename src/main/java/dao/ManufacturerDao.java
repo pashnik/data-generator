@@ -21,8 +21,11 @@ public class ManufacturerDao extends AbstractDao<Manufacturer> implements Findab
         Query query = session.createQuery("from Manufacturer m where m.manufacturerName = :name");
         query.setParameter("name", manufacturerName);
         Manufacturer manufacturer = (Manufacturer) query.uniqueResult();
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
         return manufacturer;
     }
 }

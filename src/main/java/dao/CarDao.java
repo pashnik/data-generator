@@ -21,8 +21,11 @@ public class CarDao extends AbstractDao<Car> implements FindableByName<Car> {
         Query query = session.createQuery("from Car c where c.name = :name");
         query.setParameter("name", carName);
         Car car = (Car) query.uniqueResult();
-        transaction.commit();
-        session.close();
+        try {
+            transaction.commit();
+        } finally {
+            session.close();
+        }
         return car;
     }
 }
