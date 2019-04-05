@@ -14,7 +14,12 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
     @SuppressWarnings("unchecked")
     @Override
     public T findById(int id) {
-        return (T) HibernateSessionFactory.getSessionFactory().openStatelessSession().get(getEntity(), id);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        T element = (T) HibernateSessionFactory.getSessionFactory().openStatelessSession().get(getEntity(), id);
+        transaction.commit();
+        session.close();
+        return element;
     }
 
     @Override

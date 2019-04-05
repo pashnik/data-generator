@@ -3,6 +3,8 @@ package generator;
 import dao.*;
 import models.*;
 
+import java.util.List;
+
 public class DataGenerator {
 
     private final BodyDao bodyDao = new BodyDao();
@@ -15,22 +17,32 @@ public class DataGenerator {
 
     private final int manufacturerNumber;
     private final int carNumber;
-    private final int complectationNumner;
+    private final int complectationNumber;
     private final int transmissionNumber;
     private final int bodyNumber;
     private final int engineNumber;
     private final int optionalNumber;
+    private final int complectationOptionalNumber;
+    private final int complectationEngineNumber;
+    private final int optionalComplectationNumber;
+    private final int engineComplectationNumber;
 
-    public DataGenerator(int manufacturerNumber, int carNumber, int complectationNumner,
+    public DataGenerator(int manufacturerNumber, int carNumber, int complectationNumber,
                          int transmissionNumber, int bodyNumber, int engineNumber,
-                         int optionalNumber) {
+                         int optionalNumber, int complectationOptionalNumber,
+                         int complectationEngineNumber, int optionalComplectationNumber,
+                         int engineComplectationNumber) {
         this.manufacturerNumber = manufacturerNumber;
         this.carNumber = carNumber;
-        this.complectationNumner = complectationNumner;
+        this.complectationNumber = complectationNumber;
         this.transmissionNumber = transmissionNumber;
         this.bodyNumber = bodyNumber;
         this.engineNumber = engineNumber;
         this.optionalNumber = optionalNumber;
+        this.complectationOptionalNumber = complectationOptionalNumber;
+        this.complectationEngineNumber = complectationEngineNumber;
+        this.optionalComplectationNumber = optionalComplectationNumber;
+        this.engineComplectationNumber = engineComplectationNumber;
     }
 
     /*
@@ -43,8 +55,14 @@ public class DataGenerator {
         generateTransmission();
         generateBody();
         generateComplectation();
+        generateOptional();
+        generateEngine();
 
-        // generate bindings to optional and engine!
+        // generate bindings to optionals and engines
+        bindCompEngine();
+        bindCompOptional();
+        bindEngineComp();
+        bindOptionalComp();
     }
 
     private void generateManufacturer() {
@@ -97,9 +115,6 @@ public class DataGenerator {
             optional.setEmergencySystem(getOptionalSystem());
             optional.setHeadlights(getOptionalSystem());
             optional.setSecurityAlarm(getOptionalSystem());
-
-            optional.addComplectation(complectationDao.findById((int) (Math.random() *
-                    complectationNumner) + 1));
             optionalDao.save(optional);
         }
     }
@@ -121,15 +136,12 @@ public class DataGenerator {
             engine.setEngineType(Data.ENGINE_TYPE.get((int) (Math.random() * (Data.ENGINE_TYPE.size()))));
             engine.setEcologicalClass((int) (Math.random() * (Data.MAX_ECOLOGICAL_CLASS -
                     Data.MIN_ECOLOGICAL_CLASS)) + Data.MIN_ECOLOGICAL_CLASS + 1);
-
-            engine.addComplectation(complectationDao.findById((int) (Math.random() *
-                    complectationNumner) + 1));
             engineDao.save(engine);
         }
     }
 
     private void generateComplectation() {
-        for (int i = 0; i < complectationNumner; i++) {
+        for (int i = 0; i < complectationNumber; i++) {
             Complectation complectation = new Complectation();
             complectation.setTransmission(transmissionDao.findById((int) (Math.random() *
                     transmissionNumber) + 1));
@@ -141,5 +153,42 @@ public class DataGenerator {
         }
     }
 
+    private void bindCompOptional() {
+        List<Complectation> complectations = complectationDao.findAll();
+        for (Complectation complectation : complectations) {
+            for (int i = 0; i < complectationOptionalNumber; i++) {
+                complectation.addOptional(optionalDao.findById((int) (Math.random() * optionalNumber) + 1));
+            }
+        }
+    }
 
+    private void bindOptionalComp() {
+        List<Optional> optionals = optionalDao.findAll();
+        for (Optional optional : optionals) {
+            for (int i = 0; i < optionalComplectationNumber; i++) {
+                optional.addComplectation(complectationDao.findById((int) (Math.random() *
+                        complectationNumber) + 1));
+            }
+        }
+    }
+
+    private void bindCompEngine() {
+        List<Complectation> complectations = complectationDao.findAll();
+        for (Complectation complectation : complectations) {
+            for (int i = 0; i < complectationEngineNumber; i++) {
+                complectation.addEngine(engineDao.findById((int) (Math.random() *
+                        engineNumber) + 1));
+            }
+        }
+    }
+
+    private void bindEngineComp() {
+        List<Engine> engines = engineDao.findAll();
+        for (Engine engine : engines) {
+            for (int i = 0; i < engineComplectationNumber; i++) {
+                engine.addComplectation(complectationDao.findById((int) (Math.random() *
+                        complectationNumber) + 1));
+            }
+        }
+    }
 }
