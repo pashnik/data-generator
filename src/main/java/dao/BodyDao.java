@@ -9,6 +9,10 @@ import utils.HibernateSessionFactory;
 
 public class BodyDao extends AbstractDao<Body> implements FindableByType<Body> {
 
+    public BodyDao(Session session) {
+        super(session);
+    }
+
     @Override
     protected Class getEntity() {
         return Body.class;

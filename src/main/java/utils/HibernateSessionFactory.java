@@ -23,4 +23,8 @@ public class HibernateSessionFactory {
         return sessionFactory;
     }
 
+    public static void stop() {
+        sessionFactory.close();
+    }
+
 }

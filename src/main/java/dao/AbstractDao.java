@@ -11,72 +11,91 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
 
     protected abstract Class getEntity();
 
+    private final Session session;
+
+    public AbstractDao(Session session) {
+        this.session = session;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public T findById(int id) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+//        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         T element = (T) session.get(getEntity(), id);
-        try {
-            transaction.commit();
-        } finally {
-            session.close();
-        }
+        transaction.commit();
+//        try {
+//            transaction.commit();
+//        } finally {
+//            session.close();
+//        }
         return element;
     }
 
     @Override
     public void save(T element) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+//        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(element);
-        try {
-            transaction.commit();
-        } finally {
-            session.close();
-        }
+        transaction.commit();
+//        try {
+//            transaction.commit();
+//        } finally {
+//            session.close();
+//        }
     }
 
     @Override
     public void update(T element) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+//        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.update(element);
-        try {
-            transaction.commit();
-        } finally {
-            session.close();
-        }
+        transaction.commit();
+//        try {
+//            transaction.commit();
+//        } finally {
+//            session.close();
+//        }
     }
 
     @Override
     public void delete(T element) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+//        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.delete(element);
-        try {
-            transaction.commit();
-        } finally {
-            session.close();
-        }
+        transaction.commit();
+//        try {
+//            transaction.commit();
+//        } finally {
+//            session.close();
+//        }
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<T> findAll() {
-        return (List<T>) HibernateSessionFactory.getSessionFactory()
-                .openSession().createQuery("From" + " " + getEntity().getSimpleName()).list();
+//        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        List<T> list = session.createQuery("From" + " " + getEntity().getSimpleName()).list();
+        transaction.commit();
+//        try {
+//            transaction.commit();
+//        } finally {
+//            session.close();
+//        }
+        return list;
     }
 
     @Override
     public void deleteAll() {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+//        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.createQuery("delete from" + " " + getEntity().getSimpleName()).executeUpdate();
-        try {
-            transaction.commit();
-        } finally {
-            session.close();
-        }
+        transaction.commit();
+//        try {
+//            transaction.commit();
+//        } finally {
+//            session.close();
+//        }
     }
 }

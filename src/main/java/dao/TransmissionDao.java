@@ -9,6 +9,10 @@ import utils.HibernateSessionFactory;
 
 public class TransmissionDao extends AbstractDao<Transmission> implements FindableByType<Transmission> {
 
+    public TransmissionDao(Session session) {
+        super(session);
+    }
+
     @Override
     protected Class getEntity() {
         return Transmission.class;

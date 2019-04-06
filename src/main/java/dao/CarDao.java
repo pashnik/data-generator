@@ -9,6 +9,10 @@ import utils.HibernateSessionFactory;
 
 public class CarDao extends AbstractDao<Car> implements FindableByName<Car> {
 
+    public CarDao(Session session) {
+        super(session);
+    }
+
     @Override
     protected Class getEntity() {
         return Car.class;

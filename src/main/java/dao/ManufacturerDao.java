@@ -9,6 +9,10 @@ import utils.HibernateSessionFactory;
 
 public class ManufacturerDao extends AbstractDao<Manufacturer> implements FindableByName<Manufacturer> {
 
+    public ManufacturerDao(Session session) {
+        super(session);
+    }
+
     @Override
     protected Class getEntity() {
         return Manufacturer.class;
