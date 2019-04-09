@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import utils.HibernateSessionFactory;
 
 import static java.lang.Math.*;
+import static generator.Data.*;
 
 import java.util.List;
 
@@ -90,10 +91,10 @@ public class DataGenerator {
 
     private void generateManufacturer() {
         for (int i = 0; i < manufacturerNumber; i++) {
-            String manufacturerName = Data.MANUFACTURERS.get((int) (random() *
-                    Data.MANUFACTURERS.size()));
-            String countryName = Data.COUNTRIES.get((int) (random() *
-                    Data.COUNTRIES.size()));
+            String manufacturerName = MANUFACTURERS.get((int) (random() *
+                    MANUFACTURERS.size()));
+            String countryName = COUNTRIES.get((int) (random() *
+                    COUNTRIES.size()));
 
             Manufacturer manufacturer = new Manufacturer(manufacturerName, countryName);
             manufacturerDao.save(manufacturer);
@@ -102,9 +103,9 @@ public class DataGenerator {
 
     private void generateCar() {
         for (int i = 0; i < carNumber; i++) {
-            String carName = Data.PREFIX_CAR_NAME.get((int) (random() * Data.PREFIX_CAR_NAME.size())) +
-                    Data.POSTFIX_CAR_NAME.get((int) (random() *
-                            Data.POSTFIX_CAR_NAME.size()));
+            String carName = PREFIX_CAR_NAME.get((int) (random() * PREFIX_CAR_NAME.size())) +
+                    POSTFIX_CAR_NAME.get((int) (random() *
+                            POSTFIX_CAR_NAME.size()));
             Manufacturer manufacturer = manufacturerDao.findById((int) (random() * manufacturerNumber) + 1);
 
             Car car = new Car(carName, manufacturer);
@@ -114,8 +115,8 @@ public class DataGenerator {
 
     private void generateTransmission() {
         for (int i = 0; i < transmissionNumber; i++) {
-            String transmissionType = Data.TRANSMISSION_TYPE.get((int) (random() *
-                    Data.TRANSMISSION_TYPE.size()));
+            String transmissionType = TRANSMISSION_TYPE.get((int) (random() *
+                    TRANSMISSION_TYPE.size()));
 
             Transmission transmission = new Transmission(transmissionType);
             transmissionDao.save(transmission);
@@ -124,8 +125,8 @@ public class DataGenerator {
 
     private void generateBody() {
         for (int i = 0; i < bodyNumber; i++) {
-            String bodyType = Data.BODY_TYPE.get((int) (random() *
-                    Data.BODY_TYPE.size()));
+            String bodyType = BODY_TYPE.get((int) (random() *
+                    BODY_TYPE.size()));
 
             Body body = new Body(bodyType);
             bodyDao.save(body);
@@ -140,21 +141,21 @@ public class DataGenerator {
     }
 
     private String getSystem() {
-        return Data.PREFIX_OPTIONAL.get((int) (random() *
-                Data.PREFIX_OPTIONAL.size())) +
-                Data.POSTFIX_OPTIONAL.get((int) (random()) *
-                        Data.POSTFIX_OPTIONAL.size());
+        return PREFIX_OPTIONAL.get((int) (random() *
+                PREFIX_OPTIONAL.size())) +
+                POSTFIX_OPTIONAL.get((int) (random()) *
+                        POSTFIX_OPTIONAL.size());
     }
 
     private void generateEngine() {
         for (int i = 0; i < engineNumber; i++) {
-            int power = (int) (random() * (Data.MAX_ENGINE_POWER - Data.MIN_ENGINE_POWER)) +
-                    Data.MIN_ENGINE_POWER + 1;
-            int workingVolume = (int) (random() * (Data.MAX_WORKING_VOLUME - Data.MIN_WORKING_VOLUME)) +
-                    Data.MIN_WORKING_VOLUME + 1;
-            String engineType = Data.ENGINE_TYPE.get((int) (random() * (Data.ENGINE_TYPE.size())));
-            int ecologicalClass = (int) (random() * (Data.MAX_ECOLOGICAL_CLASS -
-                    Data.MIN_ECOLOGICAL_CLASS)) + Data.MIN_ECOLOGICAL_CLASS + 1;
+            int power = (int) (random() * (MAX_ENGINE_POWER - MIN_ENGINE_POWER)) +
+                    MIN_ENGINE_POWER + 1;
+            int workingVolume = (int) (random() * (MAX_WORKING_VOLUME - MIN_WORKING_VOLUME)) +
+                    MIN_WORKING_VOLUME + 1;
+            String engineType = ENGINE_TYPE.get((int) (random() * (ENGINE_TYPE.size())));
+            int ecologicalClass = (int) (random() * (MAX_ECOLOGICAL_CLASS -
+                    MIN_ECOLOGICAL_CLASS)) + MIN_ECOLOGICAL_CLASS + 1;
 
             Engine engine = new Engine(power, engineType, workingVolume, ecologicalClass);
             engineDao.save(engine);
