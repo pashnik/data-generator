@@ -5,6 +5,8 @@ import models.*;
 import org.hibernate.Session;
 import utils.HibernateSessionFactory;
 
+import static java.lang.Math.*;
+
 import java.util.List;
 
 public class DataGenerator {
@@ -88,9 +90,9 @@ public class DataGenerator {
 
     private void generateManufacturer() {
         for (int i = 0; i < manufacturerNumber; i++) {
-            String manufacturerName = Data.MANUFACTURERS.get((int) (Math.random() *
+            String manufacturerName = Data.MANUFACTURERS.get((int) (random() *
                     Data.MANUFACTURERS.size()));
-            String countryName = Data.COUNTRIES.get((int) (Math.random() *
+            String countryName = Data.COUNTRIES.get((int) (random() *
                     Data.COUNTRIES.size()));
 
             Manufacturer manufacturer = new Manufacturer(manufacturerName, countryName);
@@ -100,10 +102,10 @@ public class DataGenerator {
 
     private void generateCar() {
         for (int i = 0; i < carNumber; i++) {
-            String carName = Data.PREFIX_CAR_NAME.get((int) (Math.random() * Data.PREFIX_CAR_NAME.size())) +
-                    Data.POSTFIX_CAR_NAME.get((int) (Math.random() *
+            String carName = Data.PREFIX_CAR_NAME.get((int) (random() * Data.PREFIX_CAR_NAME.size())) +
+                    Data.POSTFIX_CAR_NAME.get((int) (random() *
                             Data.POSTFIX_CAR_NAME.size()));
-            Manufacturer manufacturer = manufacturerDao.findById((int) (Math.random() * manufacturerNumber) + 1);
+            Manufacturer manufacturer = manufacturerDao.findById((int) (random() * manufacturerNumber) + 1);
 
             Car car = new Car(carName, manufacturer);
             carDao.save(car);
@@ -112,7 +114,7 @@ public class DataGenerator {
 
     private void generateTransmission() {
         for (int i = 0; i < transmissionNumber; i++) {
-            String transmissionType = Data.TRANSMISSION_TYPE.get((int) (Math.random() *
+            String transmissionType = Data.TRANSMISSION_TYPE.get((int) (random() *
                     Data.TRANSMISSION_TYPE.size()));
 
             Transmission transmission = new Transmission(transmissionType);
@@ -122,7 +124,7 @@ public class DataGenerator {
 
     private void generateBody() {
         for (int i = 0; i < bodyNumber; i++) {
-            String bodyType = Data.BODY_TYPE.get((int) (Math.random() *
+            String bodyType = Data.BODY_TYPE.get((int) (random() *
                     Data.BODY_TYPE.size()));
 
             Body body = new Body(bodyType);
@@ -138,20 +140,20 @@ public class DataGenerator {
     }
 
     private String getSystem() {
-        return Data.PREFIX_OPTIONAL.get((int) (Math.random() *
+        return Data.PREFIX_OPTIONAL.get((int) (random() *
                 Data.PREFIX_OPTIONAL.size())) +
-                Data.POSTFIX_OPTIONAL.get((int) (Math.random()) *
+                Data.POSTFIX_OPTIONAL.get((int) (random()) *
                         Data.POSTFIX_OPTIONAL.size());
     }
 
     private void generateEngine() {
         for (int i = 0; i < engineNumber; i++) {
-            int power = (int) (Math.random() * (Data.MAX_ENGINE_POWER - Data.MIN_ENGINE_POWER)) +
+            int power = (int) (random() * (Data.MAX_ENGINE_POWER - Data.MIN_ENGINE_POWER)) +
                     Data.MIN_ENGINE_POWER + 1;
-            int workingVolume = (int) (Math.random() * (Data.MAX_WORKING_VOLUME - Data.MIN_WORKING_VOLUME)) +
+            int workingVolume = (int) (random() * (Data.MAX_WORKING_VOLUME - Data.MIN_WORKING_VOLUME)) +
                     Data.MIN_WORKING_VOLUME + 1;
-            String engineType = Data.ENGINE_TYPE.get((int) (Math.random() * (Data.ENGINE_TYPE.size())));
-            int ecologicalClass = (int) (Math.random() * (Data.MAX_ECOLOGICAL_CLASS -
+            String engineType = Data.ENGINE_TYPE.get((int) (random() * (Data.ENGINE_TYPE.size())));
+            int ecologicalClass = (int) (random() * (Data.MAX_ECOLOGICAL_CLASS -
                     Data.MIN_ECOLOGICAL_CLASS)) + Data.MIN_ECOLOGICAL_CLASS + 1;
 
             Engine engine = new Engine(power, engineType, workingVolume, ecologicalClass);
@@ -161,11 +163,11 @@ public class DataGenerator {
 
     private void generateComplectation() {
         for (int i = 0; i < complectationNumber; i++) {
-            Transmission transmission = transmissionDao.findById((int) (Math.random() *
+            Transmission transmission = transmissionDao.findById((int) (random() *
                     transmissionNumber) + 1);
-            Body body = bodyDao.findById((int) (Math.random() *
+            Body body = bodyDao.findById((int) (random() *
                     bodyNumber) + 1);
-            Car car = carDao.findById((int) (Math.random() *
+            Car car = carDao.findById((int) (random() *
                     carNumber) + 1);
 
             Complectation complectation = new Complectation(car, transmission, body);
@@ -177,7 +179,7 @@ public class DataGenerator {
         List<Complectation> complectations = complectationDao.findAll();
         for (Complectation complectation : complectations) {
             for (int i = 0; i < complectationOptionalNumber; i++) {
-                complectation.addOptional(optionalDao.findById((int) (Math.random() * optionalNumber) + 1));
+                complectation.addOptional(optionalDao.findById((int) (random() * optionalNumber) + 1));
             }
             complectationDao.update(complectation);
         }
@@ -187,7 +189,7 @@ public class DataGenerator {
         List<Optional> optionals = optionalDao.findAll();
         for (Optional optional : optionals) {
             for (int i = 0; i < optionalComplectationNumber; i++) {
-                optional.addComplectation(complectationDao.findById((int) (Math.random() *
+                optional.addComplectation(complectationDao.findById((int) (random() *
                         complectationNumber) + 1));
             }
             optionalDao.update(optional);
@@ -198,7 +200,7 @@ public class DataGenerator {
         List<Complectation> complectations = complectationDao.findAll();
         for (Complectation complectation : complectations) {
             for (int i = 0; i < complectationEngineNumber; i++) {
-                complectation.addEngine(engineDao.findById((int) (Math.random() *
+                complectation.addEngine(engineDao.findById((int) (random() *
                         engineNumber) + 1));
             }
             complectationDao.update(complectation);
@@ -209,7 +211,7 @@ public class DataGenerator {
         List<Engine> engines = engineDao.findAll();
         for (Engine engine : engines) {
             for (int i = 0; i < engineComplectationNumber; i++) {
-                engine.addComplectation(complectationDao.findById((int) (Math.random() *
+                engine.addComplectation(complectationDao.findById((int) (random() *
                         complectationNumber) + 1));
             }
             engineDao.update(engine);
