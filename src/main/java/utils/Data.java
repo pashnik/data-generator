@@ -1,9 +1,12 @@
-package generator;
+package utils;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Data {
+
+    private Data() {
+    }
 
     public static final int MIN_ENGINE_POWER = 150;
     public static final int MAX_ENGINE_POWER = 500;
@@ -46,5 +49,4 @@ public class Data {
 
     public static final List<String> ENGINE_TYPE = Arrays.asList("Petrol",
             "Diesel");
-
 }

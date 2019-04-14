@@ -4,9 +4,10 @@ import dao.*;
 import models.*;
 import org.hibernate.Session;
 import utils.HibernateSessionFactory;
+import utils.res.DataConfigResource;
 
 import static java.lang.Math.*;
-import static generator.Data.*;
+import static utils.Data.*;
 
 import java.util.List;
 
@@ -61,6 +62,14 @@ public class DataGenerator {
         this.manufacturerDao = new ManufacturerDao(session);
         this.optionalDao = new OptionalDao(session);
         this.transmissionDao = new TransmissionDao(session);
+    }
+
+    public DataGenerator(DataConfigResource cfg) {
+        this(cfg.getManufacturerNumber(), cfg.getCarNumber(),
+                cfg.getComplectationNumber(), cfg.getTransmissionNumber(), cfg.getBodyNumber(),
+                cfg.getEngineNumber(), cfg.getOptionalNumber(), cfg.getComplectationOptionalNumber(),
+                cfg.getComplectationEngineNumber(), cfg.getOptionalComplectationNumber(),
+                cfg.getEngineComplectationNumber());
     }
 
     /*
