@@ -1,4 +1,4 @@
-package utils.res;
+package utils.objectResources;
 
 import lombok.Getter;
 import lombok.Setter;

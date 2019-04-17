@@ -1,6 +1,6 @@
 package utils;
 
-import utils.res.DataConfigResource;
+import utils.objectResources.DataConfigResource;
 
 import java.io.FileInputStream;
 import java.io.IOException;
