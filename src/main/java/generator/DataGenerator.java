@@ -7,7 +7,7 @@ import utils.HibernateSessionFactory;
 import utils.res.DataConfigResource;
 
 import static java.lang.Math.*;
-import static utils.Data.*;
+import static utils.DataGenerator.*;
 
 import java.util.List;
 

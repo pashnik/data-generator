@@ -18,7 +18,7 @@ public class ResourceLoader {
 
     public static ResourceLoader getInstance() {
         if (loader == null) {
-            return new ResourceLoader();
+            loader = new ResourceLoader();
         }
         return loader;
     }

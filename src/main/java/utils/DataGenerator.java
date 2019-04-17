@@ -1,11 +1,17 @@
 package utils;
 
+import com.github.javafaker.Faker;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
-public class Data {
+public final class DataGenerator {
 
-    private Data() {
+    private static final Faker generator = new Faker();
+    private static final Random randomizer = new Random();
+
+    private DataGenerator() {
     }
 
     public static final int MIN_ENGINE_POWER = 150;
@@ -16,7 +22,6 @@ public class Data {
 
     public static final int MIN_ECOLOGICAL_CLASS = 2;
     public static final int MAX_ECOLOGICAL_CLASS = 5;
-
 
     public static final List<String> COUNTRIES = Arrays.asList("Italy",
             "Russia", "Germany", "Japan", "USA", "France");
@@ -49,4 +54,80 @@ public class Data {
 
     public static final List<String> ENGINE_TYPE = Arrays.asList("Petrol",
             "Diesel");
+
+    private static final List<String> POST_TYPE = Arrays.asList("Ремонт",
+            "Рассказ", "Улучшение");
+
+    public static String getLogin() {
+        return generator.name().username();
+    }
+
+    public static String getPassword() {
+        return generator.internet().password();
+    }
+
+    public static String getEmail() {
+        return generator.internet().emailAddress();
+    }
+
+    public static String getManufacturer() {
+        return generator.company().name();
+    }
+
+    public static String getCountry() {
+        return generator.address().country();
+    }
+
+    public static String getCarName() {
+        return generator.address().lastName();
+    }
+
+    public static String getOptional() {
+        return generator.address().firstName();
+    }
+
+    public static String getDescription() {
+        return generator.lorem().sentence();
+    }
+
+    public static String getTransmission() {
+        // TODO
+        return null;
+    }
+
+    public static String getBody() {
+        // TODO
+        return null;
+    }
+
+    public static String getEngine() {
+        // TODO
+        return null;
+    }
+
+    public static String getPostType() {
+        // TODO
+        return null;
+    }
+
+    public static int getWorkingVolume() {
+        // TODO
+        return 0;
+    }
+
+    public static int getEnginePower() {
+        // TODO
+        return 0;
+    }
+
+    public static int getEcologicalClass() {
+        // TODO
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(generator.lorem().sentence());
+    }
+
+
 }
