@@ -50,8 +50,4 @@ public final class Randomizer {
         if (to == 0) return rand(1, to + 1);
         return rand(1, to);
     }
-
-    public static void main(String[] args) {
-        System.out.println(randOne(2));
-    }
 }
