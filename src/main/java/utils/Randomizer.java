@@ -47,6 +47,11 @@ public final class Randomizer {
      * @return random value in the interval from one to {@code to}.
      */
     public static int randOne(int to) {
+        if (to == 0) return rand(1, to + 1);
         return rand(1, to);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(randOne(2));
     }
 }
