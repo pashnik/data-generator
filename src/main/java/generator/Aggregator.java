@@ -10,6 +10,7 @@ import utils.objectResources.DataConfigResource;
 import static utils.Randomizer.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Aggregator {
 
@@ -90,119 +91,137 @@ public class Aggregator {
         session.close();
     }
 
+
     public void stop() {
         HibernateSessionFactory.stop();
     }
 
     private void generateManufacturer() {
-        for (int i = 0; i < manufacturerNumber; i++) {
-            Manufacturer manufacturer =
-                    ObjectGenerator.getInstance().getManufacturerObject();
-            manufacturerDao.save(manufacturer);
-        }
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(manufacturerNumber)
+                .forEach(i -> {
+                    Manufacturer manufacturer =
+                            ObjectGenerator.getInstance().getManufacturerObject();
+                    manufacturerDao.save(manufacturer);
+                });
     }
 
     private void generateCar() {
-        for (int i = 0; i < carNumber; i++) {
-            Manufacturer manufacturer = manufacturerDao.findById(
-                    randOne(manufacturerNumber)
-            );
-            Car car = ObjectGenerator.getInstance().getCarObject(manufacturer);
-            carDao.save(car);
-        }
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(carNumber)
+                .forEach(i -> {
+                    Manufacturer manufacturer = manufacturerDao.findById(
+                            randOne(manufacturerNumber)
+                    );
+                    Car car = ObjectGenerator.getInstance().getCarObject(manufacturer);
+                    carDao.save(car);
+                });
     }
 
     private void generateTransmission() {
-        for (int i = 0; i < transmissionNumber; i++) {
-            Transmission transmission =
-                    ObjectGenerator.getInstance().getTransmissionObject();
-            transmissionDao.save(transmission);
-        }
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(transmissionNumber)
+                .forEach(i -> {
+                    Transmission transmission =
+                            ObjectGenerator.getInstance().getTransmissionObject();
+                    transmissionDao.save(transmission);
+                });
     }
 
     private void generateBody() {
-        for (int i = 0; i < bodyNumber; i++) {
-            Body body = ObjectGenerator.getInstance().getBodyObject();
-            bodyDao.save(body);
-        }
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(bodyNumber)
+                .forEach(i -> {
+                    Body body = ObjectGenerator.getInstance().getBodyObject();
+                    bodyDao.save(body);
+                });
     }
 
     private void generateOptional() {
-        for (int i = 0; i < optionalNumber; i++) {
-            Optional optional =
-                    ObjectGenerator.getInstance().getOptionalObject();
-            optionalDao.save(optional);
-        }
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(optionalNumber)
+                .forEach(i -> {
+                    Optional optional =
+                            ObjectGenerator.getInstance().getOptionalObject();
+                    optionalDao.save(optional);
+                });
     }
 
     private void generateEngine() {
-        for (int i = 0; i < engineNumber; i++) {
-            Engine engine =
-                    ObjectGenerator.getInstance().getEngineObject();
-            engineDao.save(engine);
-        }
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(engineNumber)
+                .forEach(i -> {
+                    Engine engine =
+                            ObjectGenerator.getInstance().getEngineObject();
+                    engineDao.save(engine);
+                });
     }
 
     private void generateComplectation() {
-        for (int i = 0; i < complectationNumber; i++) {
-            Transmission transmission = transmissionDao.findById(
-                    randOne(transmissionNumber)
-            );
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(complectationNumber)
+                .forEach(i -> {
+                    Transmission transmission = transmissionDao.findById(
+                            randOne(transmissionNumber)
+                    );
 
-            Body body = bodyDao.findById(randOne(bodyNumber));
-            Car car = carDao.findById(randOne(carNumber));
+                    Body body = bodyDao.findById(randOne(bodyNumber));
+                    Car car = carDao.findById(randOne(carNumber));
 
-            Complectation complectation =
-                    ObjectGenerator.getInstance().getComplectationObject(car, transmission, body);
-            complectationDao.save(complectation);
-        }
+                    Complectation complectation =
+                            ObjectGenerator.getInstance().getComplectationObject(car, transmission, body);
+                    complectationDao.save(complectation);
+                });
     }
 
     private void bindCompOptional() {
         List<Complectation> complectations = complectationDao.findAll();
-        for (Complectation complectation : complectations) {
-            for (int i = 0; i < complectationOptionalNumber; i++) {
-                complectation.addOptional(optionalDao.findById(
-                        randOne(optionalNumber)
-                ));
-            }
+        complectations.forEach(complectation -> {
+            Stream.generate(new IntegerStreamSupplier())
+                    .limit(complectationOptionalNumber)
+                    .forEach(i ->
+                            complectation.addOptional(optionalDao.findById(
+                                    randOne(optionalNumber)
+                            )));
             complectationDao.update(complectation);
-        }
+        });
     }
 
     private void bindOptionalComp() {
         List<Optional> optionals = optionalDao.findAll();
-        for (Optional optional : optionals) {
-            for (int i = 0; i < optionalComplectationNumber; i++) {
-                optional.addComplectation(complectationDao.findById(
-                        randOne(complectationNumber)
-                ));
-            }
+        optionals.forEach(optional -> {
+            Stream.generate(new IntegerStreamSupplier())
+                    .limit(optionalComplectationNumber)
+                    .forEach(i ->
+                            optional.addComplectation(complectationDao.findById(
+                                    randOne(complectationNumber)
+                            )));
             optionalDao.update(optional);
-        }
+        });
     }
 
     private void bindCompEngine() {
         List<Complectation> complectations = complectationDao.findAll();
-        for (Complectation complectation : complectations) {
-            for (int i = 0; i < complectationEngineNumber; i++) {
-                complectation.addEngine(engineDao.findById(
-                        randOne(engineNumber)
-                ));
-            }
+        complectations.forEach(complectation -> {
+            Stream.generate(new IntegerStreamSupplier())
+                    .limit(complectationEngineNumber)
+                    .forEach(i ->
+                            complectation.addEngine(engineDao.findById(
+                                    randOne(engineNumber)
+                            )));
             complectationDao.update(complectation);
-        }
+        });
     }
 
     private void bindEngineComp() {
         List<Engine> engines = engineDao.findAll();
-        for (Engine engine : engines) {
-            for (int i = 0; i < engineComplectationNumber; i++) {
-                engine.addComplectation(complectationDao.findById(
-                        randOne(complectationNumber)
-                ));
-            }
+        engines.forEach(engine -> {
+            Stream.generate(new IntegerStreamSupplier())
+                    .limit(engineComplectationNumber)
+                    .forEach(i -> engine.addComplectation(complectationDao.findById(
+                            randOne(complectationNumber)
+                    )));
             engineDao.update(engine);
-        }
+        });
     }
 }
