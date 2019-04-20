@@ -1,4 +1,4 @@
-package dao;
+package generator;
 
 import java.util.function.Supplier;
 
