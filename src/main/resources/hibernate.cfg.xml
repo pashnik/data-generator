@@ -23,6 +23,9 @@
         <mapping class="models.Body"/>
         <mapping class="models.Optional"/>
         <mapping class="models.Engine"/>
+        <mapping class="models.Posts"/>
+        <mapping class="models.PostTypes"/>
+        <mapping class="models.Users"/>
 
     </session-factory>
 </hibernate-configuration>
