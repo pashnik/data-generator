@@ -41,11 +41,17 @@ public class Car {
     @OneToMany(mappedBy = "car")
     private Set<Posts> posts;
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsersOwnership> usersOwnerships;
+
     public Car(String name, Manufacturer manufacturer) {
         this.name = name;
         this.manufacturer = manufacturer;
         complectations = new HashSet<>();
         posts = new HashSet<>();
+        usersOwnerships = new HashSet<>();
     }
 
     public void addPost(Posts post) {
@@ -63,4 +69,13 @@ public class Car {
     public void removeComplectation(Complectation complectation) {
         complectations.remove(complectation);
     }
+
+    public void addUserOwnership(UsersOwnership ownership) {
+        usersOwnerships.add(ownership);
+    }
+
+    public void removeUserOwnership(UsersOwnership ownership) {
+        usersOwnerships.remove(ownership);
+    }
+
 }

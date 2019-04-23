@@ -38,5 +38,4 @@ public class Posts {
         this.car = car;
     }
 
-
 }

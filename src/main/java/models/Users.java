@@ -32,13 +32,24 @@ public class Users {
     @Column(name = "email")
     private String email;
 
-    // TODO
-
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsersOwnership> usersOwnerships;
 
     public Users(String login, String password, String email) {
         this.login = login;
         this.password = password;
         this.email = email;
+        usersOwnerships = new HashSet<>();
+    }
+
+    public void addUserOwnership(UsersOwnership ownership) {
+        usersOwnerships.add(ownership);
+    }
+
+    public void removeUserOwnership(UsersOwnership ownership) {
+        usersOwnerships.remove(ownership);
     }
 
 }

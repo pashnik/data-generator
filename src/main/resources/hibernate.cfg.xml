@@ -26,6 +26,8 @@
         <mapping class="models.Posts"/>
         <mapping class="models.PostTypes"/>
         <mapping class="models.Users"/>
+        <mapping class="models.UsersOwnership"/>
+        <mapping class="models.Adverts"/>
 
     </session-factory>
 </hibernate-configuration>

@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Entity
@@ -20,11 +22,13 @@ public class UsersOwnership {
     @Getter
     @Setter
     @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Users user;
 
     @Getter
     @Setter
     @JoinColumn(name = "car_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Car car;
 
     @Type(type = "date")
@@ -37,12 +41,25 @@ public class UsersOwnership {
     @Setter
     private Date to;
 
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "ownership", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Adverts> adverts;
+
     public UsersOwnership(Users user, Car car, Date from, Date to) {
         this.user = user;
         this.car = car;
         this.from = from;
         this.to = to;
+        adverts = new HashSet<>();
     }
 
+    public void addAdvert(Adverts advert) {
+        adverts.add(advert);
+    }
+
+    public void removeAdvert(Adverts advert) {
+        adverts.remove(advert);
+    }
 
 }
