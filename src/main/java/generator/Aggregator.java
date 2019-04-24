@@ -224,4 +224,26 @@ public class Aggregator {
             engineDao.update(engine);
         });
     }
+
+    private void generateAdverts() {
+        // TODO
+    }
+
+    private void generatePostTypes() {
+        // TODO
+    }
+
+    private void generateUsers() {
+        // TODO
+    }
+
+    private void generatePosts() {
+        // TODO
+    }
+
+    private void generateUsersOwnership() {
+        // TODO
+    }
+
+
 }

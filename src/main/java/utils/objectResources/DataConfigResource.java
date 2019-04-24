@@ -48,4 +48,24 @@ public class DataConfigResource {
     @Getter
     @Setter
     private int engineComplectationNumber;
+
+    @Getter
+    @Setter
+    private int advertsNumber;
+
+    @Getter
+    @Setter
+    private int postTypesNumber;
+
+    @Getter
+    @Setter
+    private int usersNumber;
+
+    @Getter
+    @Setter
+    private int postsNumber;
+
+    @Getter
+    @Setter
+    private int usersOwnershipNumber;
 }
