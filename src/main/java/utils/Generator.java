@@ -104,8 +104,8 @@ public abstract class Generator {
         return rand(MIN_ECOLOGICAL_CLASS, MAX_ECOLOGICAL_CLASS);
     }
 
-    protected Date getDate() {
-        return randDate(rand(MIN_ENGINE_POWER, MAX_ENGINE_POWER));
+    protected static Date getDate() {
+        return generator.date().birthday();
     }
 
     protected int getViewsNumber() {

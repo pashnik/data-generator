@@ -1,7 +1,5 @@
 package utils;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Random;
 
 /**
@@ -51,9 +49,5 @@ public final class Randomizer {
     public static int randOne(int to) {
         if (to == 0) return rand(1, to + 1);
         return rand(1, to);
-    }
-
-    public static Date randDate(int time) {
-        return new Date(time);
     }
 }
