@@ -24,7 +24,7 @@ public class Posts {
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_type")
-    private Posts post;
+    private PostTypes post;
 
     @Getter
     @Setter
@@ -32,7 +32,7 @@ public class Posts {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    public Posts(String description, Posts post, Car car) {
+    public Posts(String description, PostTypes post, Car car) {
         this.description = description;
         this.post = post;
         this.car = car;

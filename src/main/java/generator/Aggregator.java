@@ -23,6 +23,11 @@ public class Aggregator {
     private ManufacturerDao manufacturerDao;
     private OptionalDao optionalDao;
     private TransmissionDao transmissionDao;
+    private UsersDao usersDao;
+    private PostTypesDao postTypesDao;
+    private PostsDao postsDao;
+    private UsersOwnershipDao usersOwnershipDao;
+    private AdvertsDao advertsDao;
 
     private final int manufacturerNumber;
     private final int carNumber;
@@ -35,12 +40,19 @@ public class Aggregator {
     private final int complectationEngineNumber;
     private final int optionalComplectationNumber;
     private final int engineComplectationNumber;
+    private final int usersNumber;
+    private final int postTypeNumber;
+    private final int postNumber;
+    private final int usersOwnershipNumber;
+    private final int advertsNumber;
 
     public Aggregator(int manufacturerNumber, int carNumber, int complectationNumber,
                       int transmissionNumber, int bodyNumber, int engineNumber,
                       int optionalNumber, int complectationOptionalNumber,
                       int complectationEngineNumber, int optionalComplectationNumber,
-                      int engineComplectationNumber) {
+                      int engineComplectationNumber, int usersNumber,
+                      int postTypeNumber, int postNumber,
+                      int usersOwnershipNumber, int advertsNumber) {
 
         this.manufacturerNumber = manufacturerNumber;
         this.carNumber = carNumber;
@@ -53,6 +65,11 @@ public class Aggregator {
         this.complectationEngineNumber = complectationEngineNumber;
         this.optionalComplectationNumber = optionalComplectationNumber;
         this.engineComplectationNumber = engineComplectationNumber;
+        this.usersNumber = usersNumber;
+        this.postTypeNumber = postTypeNumber;
+        this.postNumber = postNumber;
+        this.usersOwnershipNumber = usersOwnershipNumber;
+        this.advertsNumber = advertsNumber;
 
         this.session = HibernateSessionFactory.getSessionFactory().openSession();
 
@@ -63,6 +80,11 @@ public class Aggregator {
         this.manufacturerDao = new ManufacturerDao(session);
         this.optionalDao = new OptionalDao(session);
         this.transmissionDao = new TransmissionDao(session);
+        this.usersDao = new UsersDao(session);
+        this.postTypesDao = new PostTypesDao(session);
+        this.postsDao = new PostsDao(session);
+        this.usersOwnershipDao = new UsersOwnershipDao(session);
+        this.advertsDao = new AdvertsDao(session);
     }
 
     public Aggregator(DataConfigResource cfg) {
@@ -70,7 +92,9 @@ public class Aggregator {
                 cfg.getComplectationNumber(), cfg.getTransmissionNumber(), cfg.getBodyNumber(),
                 cfg.getEngineNumber(), cfg.getOptionalNumber(), cfg.getComplectationOptionalNumber(),
                 cfg.getComplectationEngineNumber(), cfg.getOptionalComplectationNumber(),
-                cfg.getEngineComplectationNumber());
+                cfg.getEngineComplectationNumber(), cfg.getUsersNumber(),
+                cfg.getPostTypesNumber(), cfg.getPostsNumber(),
+                cfg.getUsersOwnershipNumber(), cfg.getAdvertsNumber());
     }
 
     public void fillTables() {
@@ -87,6 +111,12 @@ public class Aggregator {
         bindCompOptional();
         bindEngineComp();
         bindOptionalComp();
+
+        generateUsers();
+        generatePostTypes();
+        generatePosts();
+        generateUsersOwnership();
+        generateAdverts();
 
         session.close();
     }
@@ -226,23 +256,59 @@ public class Aggregator {
     }
 
     private void generateAdverts() {
-        // TODO
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(advertsNumber)
+                .forEach(integer -> {
+                    UsersOwnership ownership =
+                            usersOwnershipDao.findById(randOne(usersOwnershipNumber));
+                    Adverts advert =
+                            ObjectGenerator.getInstance().generateAdvertObject(ownership);
+                    advertsDao.save(advert);
+                });
     }
 
     private void generatePostTypes() {
-        // TODO
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(postTypeNumber)
+                .forEach((integer -> {
+                    PostTypes postType =
+                            ObjectGenerator.getInstance().generatePostTypeObject();
+                    postTypesDao.save(postType);
+                }));
     }
 
     private void generateUsers() {
-        // TODO
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(usersNumber)
+                .forEach((integer -> {
+                    Users user =
+                            ObjectGenerator.getInstance().generateUserObject();
+                    usersDao.save(user);
+                }));
     }
 
     private void generatePosts() {
-        // TODO
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(postNumber)
+                .forEach(integer -> {
+                    Car car = carDao.findById(randOne(carNumber));
+                    PostTypes postType = postTypesDao.findById(randOne(postTypeNumber));
+                    Posts post =
+                            ObjectGenerator.getInstance().generatePostObject(postType, car);
+                    postsDao.save(post);
+                });
     }
 
     private void generateUsersOwnership() {
-        // TODO
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(usersOwnershipNumber)
+                .forEach(integer -> {
+                    Car car = carDao.findById(randOne(carNumber));
+                    Users user = usersDao.findById(randOne(usersNumber));
+                    UsersOwnership ownership =
+                            ObjectGenerator.getInstance().generateUsersOwnershipObject(user, car);
+                    usersOwnershipDao.save(ownership);
+                });
     }
 
 

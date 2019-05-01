@@ -34,11 +34,13 @@ public class UsersOwnership {
     @Type(type = "date")
     @Getter
     @Setter
+    @Column(name = "from_date")
     private Date from;
 
     @Type(type = "date")
     @Getter
     @Setter
+    @Column(name = "to_date")
     private Date to;
 
     @Getter

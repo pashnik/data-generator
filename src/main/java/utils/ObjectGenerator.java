@@ -2,6 +2,8 @@ package utils;
 
 import models.*;
 
+import java.util.Date;
+
 public final class ObjectGenerator extends Generator {
 
     private static ObjectGenerator objectGenerator;
@@ -59,5 +61,33 @@ public final class ObjectGenerator extends Generator {
         return new Complectation(car, transmission, body);
     }
 
+    public Users generateUserObject() {
+        String login = getLogin();
+        String password = getPassword();
+        String email = getEmail();
+        return new Users(login, password, email);
+    }
+
+
+    public PostTypes generatePostTypeObject() {
+        String type = getPost();
+        return new PostTypes(type);
+    }
+
+    public Posts generatePostObject(PostTypes type, Car car) {
+        String description = getDescription();
+        return new Posts(description, type, car);
+    }
+
+    public UsersOwnership generateUsersOwnershipObject(Users user, Car car) {
+        Date from = getDate();
+        Date to = getDate();
+        return new UsersOwnership(user, car, from, to);
+    }
+
+    public Adverts generateAdvertObject(UsersOwnership ownership) {
+        int viewsNumber = getViewsNumber();
+        return new Adverts(viewsNumber, ownership);
+    }
 
 }

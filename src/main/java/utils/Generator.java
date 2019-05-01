@@ -3,6 +3,7 @@ package utils;
 import com.github.javafaker.Faker;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static utils.Randomizer.*;
@@ -101,5 +102,13 @@ public abstract class Generator {
 
     protected int getEcologicalClass() {
         return rand(MIN_ECOLOGICAL_CLASS, MAX_ECOLOGICAL_CLASS);
+    }
+
+    protected Date getDate() {
+        return randDate(rand(MIN_ENGINE_POWER, MAX_ENGINE_POWER));
+    }
+
+    protected int getViewsNumber() {
+        return rand(1, Integer.MAX_VALUE - 1);
     }
 }
