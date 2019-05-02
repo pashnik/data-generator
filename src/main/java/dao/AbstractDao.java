@@ -50,7 +50,7 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
     @Override
     public List<T> findAll() {
         Transaction transaction = session.beginTransaction();
-        List<T> list = session.createQuery("From" + " " + getEntity().getSimpleName()).list();
+        List<T> list = session.createQuery("From " + getEntity().getSimpleName()).list();
         transaction.commit();
         return list;
     }
@@ -58,7 +58,7 @@ public abstract class AbstractDao<T> implements MainDaoInterface<T> {
     @Override
     public void deleteAll() {
         Transaction transaction = session.beginTransaction();
-        session.createQuery("delete from" + " " + getEntity().getSimpleName()).executeUpdate();
+        session.createQuery("delete from " + getEntity().getSimpleName()).executeUpdate();
         transaction.commit();
     }
 }
