@@ -47,6 +47,11 @@ public class Complectation {
 
     @Setter
     @Getter
+    @OneToMany(mappedBy = "complectation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SaleHistory> saleHistories;
+
+    @Setter
+    @Getter
     @ManyToMany
     @JoinTable(name = "comp_optional",
             joinColumns = @JoinColumn(name = "complectation_id"),
@@ -59,6 +64,15 @@ public class Complectation {
         this.transmission = transmission;
         this.engines = new HashSet<>();
         this.optionals = new HashSet<>();
+        this.saleHistories = new HashSet<>();
+    }
+
+    public void addSaleHistory(SaleHistory saleHistory) {
+        saleHistories.add(saleHistory);
+    }
+
+    public void removeSaleHistory(SaleHistory saleHistory) {
+        saleHistories.remove(saleHistory);
     }
 
     public void addOptional(Optional optional) {

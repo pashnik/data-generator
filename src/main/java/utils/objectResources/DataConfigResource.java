@@ -68,4 +68,8 @@ public class DataConfigResource {
     @Getter
     @Setter
     private int usersOwnershipNumber;
+
+    @Getter
+    @Setter
+    private int saleHistoryNumber;
 }

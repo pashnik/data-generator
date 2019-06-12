@@ -28,6 +28,7 @@ public class Aggregator {
     private PostsDao postsDao;
     private UsersOwnershipDao usersOwnershipDao;
     private AdvertsDao advertsDao;
+    private SaleHistoryDao saleHistoryDao;
 
     private final int manufacturerNumber;
     private final int carNumber;
@@ -45,6 +46,8 @@ public class Aggregator {
     private final int postNumber;
     private final int usersOwnershipNumber;
     private final int advertsNumber;
+    private final int saleHistoryNumber;
+
 
     public Aggregator(int manufacturerNumber, int carNumber, int complectationNumber,
                       int transmissionNumber, int bodyNumber, int engineNumber,
@@ -52,7 +55,7 @@ public class Aggregator {
                       int complectationEngineNumber, int optionalComplectationNumber,
                       int engineComplectationNumber, int usersNumber,
                       int postTypeNumber, int postNumber,
-                      int usersOwnershipNumber, int advertsNumber) {
+                      int usersOwnershipNumber, int advertsNumber, int saleHistoryNumber) {
 
         this.manufacturerNumber = manufacturerNumber;
         this.carNumber = carNumber;
@@ -70,6 +73,7 @@ public class Aggregator {
         this.postNumber = postNumber;
         this.usersOwnershipNumber = usersOwnershipNumber;
         this.advertsNumber = advertsNumber;
+        this.saleHistoryNumber = saleHistoryNumber;
 
         this.session = HibernateSessionFactory.getSessionFactory().openSession();
 
@@ -85,6 +89,7 @@ public class Aggregator {
         this.postsDao = new PostsDao(session);
         this.usersOwnershipDao = new UsersOwnershipDao(session);
         this.advertsDao = new AdvertsDao(session);
+        this.saleHistoryDao = new SaleHistoryDao(session);
     }
 
     public Aggregator(DataConfigResource cfg) {
@@ -94,7 +99,7 @@ public class Aggregator {
                 cfg.getComplectationEngineNumber(), cfg.getOptionalComplectationNumber(),
                 cfg.getEngineComplectationNumber(), cfg.getUsersNumber(),
                 cfg.getPostTypesNumber(), cfg.getPostsNumber(),
-                cfg.getUsersOwnershipNumber(), cfg.getAdvertsNumber());
+                cfg.getUsersOwnershipNumber(), cfg.getAdvertsNumber(), cfg.getSaleHistoryNumber());
     }
 
     public void fillTables() {
@@ -117,6 +122,7 @@ public class Aggregator {
         generatePosts();
         generateUsersOwnership();
         generateAdverts();
+        generateSaleHistory();
 
         session.close();
     }
@@ -308,6 +314,17 @@ public class Aggregator {
                     UsersOwnership ownership =
                             ObjectGenerator.getInstance().generateUsersOwnershipObject(user, car);
                     usersOwnershipDao.save(ownership);
+                });
+    }
+
+    private void generateSaleHistory() {
+        Stream.generate(new IntegerStreamSupplier())
+                .limit(saleHistoryNumber)
+                .forEach(integer -> {
+                    Complectation complectation = complectationDao.findById(randOne(complectationNumber));
+                    SaleHistory saleHistory =
+                            ObjectGenerator.getInstance().generateSaleHistory(complectation);
+                    saleHistoryDao.save(saleHistory);
                 });
     }
 

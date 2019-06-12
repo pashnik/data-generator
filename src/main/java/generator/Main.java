@@ -14,5 +14,4 @@ public class Main {
         aggregator.fillTables();
         aggregator.stop();
     }
-
 }

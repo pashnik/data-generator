@@ -90,4 +90,9 @@ public final class ObjectGenerator extends Generator {
         return new Adverts(viewsNumber, ownership);
     }
 
+    public SaleHistory generateSaleHistory(Complectation complectation) {
+        double price = 12345.1234 + getViewsNumber();
+        return new SaleHistory(complectation, price);
+    }
+
 }

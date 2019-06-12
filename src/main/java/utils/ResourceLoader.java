@@ -77,6 +77,9 @@ public class ResourceLoader {
             data.setUsersOwnershipNumber(Integer.parseInt(
                     (String) properties.get("users_ownership_number")
             ));
+            data.setSaleHistoryNumber(Integer.parseInt(
+                    (String) properties.get("sale_history_number")
+            ));
         } catch (IOException e) {
             e.printStackTrace();
         }
