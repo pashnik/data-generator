@@ -321,11 +321,21 @@ public class Aggregator {
         Stream.generate(new IntegerStreamSupplier())
                 .limit(saleHistoryNumber)
                 .forEach(integer -> {
-                    Complectation complectation = complectationDao.findById(randOne(complectationNumber));
+                    Complectation complectation =
+                            complectationDao.findById(randOne(complectationNumber));
+                    Engine engine =
+                            engineDao.findById(randOne(engineNumber));
+                    Optional optional =
+                            optionalDao.findById(randOne(optionalNumber));
                     SaleHistory saleHistory =
-                            ObjectGenerator.getInstance().generateSaleHistory(complectation);
+                            ObjectGenerator.getInstance()
+                                    .generateSaleHistory(complectation, engine, optional);
                     saleHistoryDao.save(saleHistory);
                 });
+    }
+
+    private void generateExtraOptional() {
+        // TODO
     }
 
 

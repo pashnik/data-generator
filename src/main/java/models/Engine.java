@@ -39,6 +39,11 @@ public class Engine {
     @Column(name = "ecological_class")
     private int ecologicalClass;
 
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "engine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SaleHistory> saleHistories;
+
     @Getter
     @Setter
     @ManyToMany
@@ -53,6 +58,15 @@ public class Engine {
         this.workingVolume = workingVolume;
         this.ecologicalClass = ecologicalClass;
         this.complectations = new HashSet<>();
+        this.saleHistories = new HashSet<>();
+    }
+
+    public void addSaleHistory(SaleHistory saleHistory) {
+        saleHistories.add(saleHistory);
+    }
+
+    public void removeSaleHistory(SaleHistory saleHistory) {
+        saleHistories.remove(saleHistory);
     }
 
     public void addComplectation(Complectation complectation) {

@@ -90,9 +90,14 @@ public final class ObjectGenerator extends Generator {
         return new Adverts(viewsNumber, ownership);
     }
 
-    public SaleHistory generateSaleHistory(Complectation complectation) {
+    public SaleHistory generateSaleHistory(Complectation complectation,
+                                           Engine engine, Optional optional) {
         double price = 12345.1234 + getViewsNumber();
-        return new SaleHistory(complectation, price);
+        return new SaleHistory(complectation, price, engine, optional);
+    }
+
+    public ExtraOptionals generateExtraOptional(Optional optional, SaleHistory saleHistory) {
+        return new ExtraOptionals(optional, saleHistory);
     }
 
 }

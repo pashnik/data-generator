@@ -46,6 +46,16 @@ public class Optional {
 
     @Setter
     @Getter
+    @OneToMany(mappedBy = "optional", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SaleHistory> saleHistories;
+
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "optional", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ExtraOptionals> extraOptionals;
+
+    @Setter
+    @Getter
     @ManyToMany
     @JoinTable(name = "comp_optional",
             joinColumns = @JoinColumn(name = "optional_id"),
@@ -60,6 +70,16 @@ public class Optional {
         this.headlights = headlights;
         this.securityAlarm = securityAlarm;
         this.complectations = new HashSet<>();
+        this.saleHistories = new HashSet<>();
+        this.extraOptionals = new HashSet<>();
+    }
+
+    public void addExtraOptional(ExtraOptionals extraOptional) {
+        extraOptionals.add(extraOptional);
+    }
+
+    public void removeExtraOptional(ExtraOptionals extraOptional) {
+        extraOptionals.remove(extraOptional);
     }
 
     public void addComplectation(Complectation complectation) {
@@ -68,5 +88,13 @@ public class Optional {
 
     public void removeComplectation(Complectation complectation) {
         complectations.remove(complectation);
+    }
+
+    public void addSaleHistory(SaleHistory saleHistory) {
+        saleHistories.add(saleHistory);
+    }
+
+    public void removeSaleHistory(SaleHistory saleHistory) {
+        saleHistories.remove(saleHistory);
     }
 }
