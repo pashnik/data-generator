@@ -80,6 +80,12 @@ public class ResourceLoader {
             data.setSaleHistoryNumber(Integer.parseInt(
                     (String) properties.get("sale_history_number")
             ));
+            data.setSaleOptional(Integer.parseInt(
+                    (String) properties.get("sale_optional_number")
+            ));
+            data.setOptionalSale(Integer.parseInt(
+                    (String) properties.get("optional_sale_number")
+            ));
         } catch (IOException e) {
             e.printStackTrace();
         }

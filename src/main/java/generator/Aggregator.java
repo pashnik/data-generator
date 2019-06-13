@@ -47,6 +47,8 @@ public class Aggregator {
     private final int usersOwnershipNumber;
     private final int advertsNumber;
     private final int saleHistoryNumber;
+    private final int optionalSaleNumber;
+    private final int saleOptionalNumber;
 
 
     public Aggregator(int manufacturerNumber, int carNumber, int complectationNumber,
@@ -55,7 +57,8 @@ public class Aggregator {
                       int complectationEngineNumber, int optionalComplectationNumber,
                       int engineComplectationNumber, int usersNumber,
                       int postTypeNumber, int postNumber,
-                      int usersOwnershipNumber, int advertsNumber, int saleHistoryNumber) {
+                      int usersOwnershipNumber, int advertsNumber, int saleHistoryNumber,
+                      int optionalSaleNumber, int saleOptionalNumber) {
 
         this.manufacturerNumber = manufacturerNumber;
         this.carNumber = carNumber;
@@ -74,6 +77,8 @@ public class Aggregator {
         this.usersOwnershipNumber = usersOwnershipNumber;
         this.advertsNumber = advertsNumber;
         this.saleHistoryNumber = saleHistoryNumber;
+        this.optionalSaleNumber = optionalSaleNumber;
+        this.saleOptionalNumber = saleOptionalNumber;
 
         this.session = HibernateSessionFactory.getSessionFactory().openSession();
 
@@ -99,7 +104,8 @@ public class Aggregator {
                 cfg.getComplectationEngineNumber(), cfg.getOptionalComplectationNumber(),
                 cfg.getEngineComplectationNumber(), cfg.getUsersNumber(),
                 cfg.getPostTypesNumber(), cfg.getPostsNumber(),
-                cfg.getUsersOwnershipNumber(), cfg.getAdvertsNumber(), cfg.getSaleHistoryNumber());
+                cfg.getUsersOwnershipNumber(), cfg.getAdvertsNumber(), cfg.getSaleHistoryNumber(),
+                cfg.getSaleOptional(), cfg.getOptionalSale());
     }
 
     public void fillTables() {
@@ -122,6 +128,7 @@ public class Aggregator {
         generatePosts();
         generateUsersOwnership();
         generateAdverts();
+
         generateSaleHistory();
 
         session.close();
@@ -334,8 +341,32 @@ public class Aggregator {
                 });
     }
 
-    private void generateExtraOptional() {
-        // TODO
+    // TODO
+
+    private void generateSaleOptional() {
+        List<SaleHistory> saleHistories = saleHistoryDao.findAll();
+        saleHistories.forEach(saleHistory -> {
+            Stream.generate(new IntegerStreamSupplier())
+                    .limit(saleOptionalNumber)
+                    .forEach(i ->
+                            saleHistory.addOptional(optionalDao.findById(
+                                    randOne(optionalNumber)
+                            )));
+            saleHistoryDao.save(saleHistory);
+        });
+    }
+
+    private void generateOptionalSale() {
+        List<Optional> optionals = optionalDao.findAll();
+        optionals.forEach(optional -> {
+            Stream.generate(new IntegerStreamSupplier())
+                    .limit(optionalSaleNumber)
+                    .forEach(i ->
+                            optional.addSaleHistoryMany(saleHistoryDao.findById(
+                                    randOne(saleHistoryNumber)
+                            )));
+            optionalDao.save(optional);
+        });
     }
 
 

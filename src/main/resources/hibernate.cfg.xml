@@ -29,7 +29,6 @@
         <mapping class="models.UsersOwnership"/>
         <mapping class="models.Adverts"/>
         <mapping class="models.SaleHistory"/>
-        <mapping class="models.ExtraOptionals"/>
 
     </session-factory>
 </hibernate-configuration>

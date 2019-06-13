@@ -3,13 +3,12 @@ package models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "sale_history")
 public class SaleHistory {
@@ -43,8 +42,11 @@ public class SaleHistory {
 
     @Setter
     @Getter
-    @OneToMany(mappedBy = "saleHistory", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ExtraOptionals> extraOptionals;
+    @ManyToMany
+    @JoinTable(name = "extra_optionals",
+            joinColumns = @JoinColumn(name = "sale_history_id"),
+            inverseJoinColumns = @JoinColumn(name = "optional_id"))
+    private Set<Optional> optionals;
 
     public SaleHistory(Complectation complectation, double saleSum, Engine engine,
                        Optional optional) {
@@ -52,13 +54,15 @@ public class SaleHistory {
         this.optional = optional;
         this.complectation = complectation;
         this.saleSum = saleSum;
+        this.optionals = new HashSet<>();
     }
 
-    public void addExtraOptional(ExtraOptionals extraOptional) {
-        extraOptionals.add(extraOptional);
+    public void addOptional(Optional optional) {
+        optionals.add(optional);
     }
 
-    public void removeExtraOptional(ExtraOptionals extraOptional) {
-        extraOptionals.remove(extraOptional);
+    public void removeOptional(Optional optional) {
+        optionals.remove(optional);
     }
+
 }

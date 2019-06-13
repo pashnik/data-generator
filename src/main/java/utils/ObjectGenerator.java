@@ -96,8 +96,4 @@ public final class ObjectGenerator extends Generator {
         return new SaleHistory(complectation, price, engine, optional);
     }
 
-    public ExtraOptionals generateExtraOptional(Optional optional, SaleHistory saleHistory) {
-        return new ExtraOptionals(optional, saleHistory);
-    }
-
 }

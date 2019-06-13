@@ -72,4 +72,12 @@ public class DataConfigResource {
     @Getter
     @Setter
     private int saleHistoryNumber;
+
+    @Getter
+    @Setter
+    private int optionalSale;
+
+    @Getter
+    @Setter
+    private int saleOptional;
 }

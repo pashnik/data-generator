@@ -51,16 +51,19 @@ public class Optional {
 
     @Setter
     @Getter
-    @OneToMany(mappedBy = "optional", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ExtraOptionals> extraOptionals;
-
-    @Setter
-    @Getter
     @ManyToMany
     @JoinTable(name = "comp_optional",
             joinColumns = @JoinColumn(name = "optional_id"),
             inverseJoinColumns = @JoinColumn(name = "complectation_id"))
     private Set<Complectation> complectations;
+
+    @Setter
+    @Getter
+    @ManyToMany
+    @JoinTable(name = "extra_optionals",
+            joinColumns = @JoinColumn(name = "optional_id"),
+            inverseJoinColumns = @JoinColumn(name = "sale_history_id"))
+    private Set<SaleHistory> saleHistoriesMany;
 
     public Optional(String mediaCenter, String airBags,
                     String emergencySystem, String headlights, String securityAlarm) {
@@ -71,15 +74,7 @@ public class Optional {
         this.securityAlarm = securityAlarm;
         this.complectations = new HashSet<>();
         this.saleHistories = new HashSet<>();
-        this.extraOptionals = new HashSet<>();
-    }
-
-    public void addExtraOptional(ExtraOptionals extraOptional) {
-        extraOptionals.add(extraOptional);
-    }
-
-    public void removeExtraOptional(ExtraOptionals extraOptional) {
-        extraOptionals.remove(extraOptional);
+        saleHistoriesMany = new HashSet<>();
     }
 
     public void addComplectation(Complectation complectation) {
@@ -96,5 +91,13 @@ public class Optional {
 
     public void removeSaleHistory(SaleHistory saleHistory) {
         saleHistories.remove(saleHistory);
+    }
+
+    public void addSaleHistoryMany(SaleHistory saleHistory) {
+        saleHistoriesMany.add(saleHistory);
+    }
+
+    public void removeSaleHistoryMany(SaleHistory saleHistory) {
+        saleHistoriesMany.remove(saleHistory);
     }
 }
