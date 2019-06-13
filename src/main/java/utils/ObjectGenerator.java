@@ -80,9 +80,11 @@ public final class ObjectGenerator extends Generator {
     }
 
     public UsersOwnership generateUsersOwnershipObject(Users user, Car car) {
-        Date from = getDate();
-        Date to = getDate();
-        return new UsersOwnership(user, car, from, to);
+        for (; ; ) {
+            Date from = getDate();
+            Date to = getDate();
+            if (from.after(to)) return new UsersOwnership(user, car, from, to);
+        }
     }
 
     public Adverts generateAdvertObject(UsersOwnership ownership) {
